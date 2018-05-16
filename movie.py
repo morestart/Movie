@@ -1,11 +1,12 @@
 import asyncio
 import logging
 import os
-import voluptuous as vol
-import requests
-from apscheduler.schedulers.blocking import BlockingScheduler
 import socket
 
+import voluptuous as vol
+import requests
+
+REQUIREMENTS = ['apscheduler']
 DOMAIN = 'movie'
 
 CONFIG_SCHEMA = vol.Schema({
@@ -55,11 +56,9 @@ def get_host_ip():
 
 
 @asyncio.coroutine
-def async_setup(hass):
+def async_setup(hass, config=None):
     """Set up the movie component."""
-    scheduler = BlockingScheduler()
-    scheduler.add_job(restart_ha, 'cron', day_of_week='0-6', hour=2, minute=00)
-    scheduler.start()
+
     log = logging.getLogger(__name__)
     log.info("Running")
     get_movie_data()
@@ -72,3 +71,16 @@ def async_setup(hass):
         con, "最近上映的电影")
 
     return True
+
+
+def start_job():
+    from apscheduler.schedulers.blocking import BlockingScheduler
+    scheduler = BlockingScheduler()
+    scheduler.add_job(restart_ha, 'cron', day_of_week='0', hour=2, minute=00)
+    scheduler.start()
+
+
+import threading
+
+t = threading.Thread(target=start_job)
+t.start()
