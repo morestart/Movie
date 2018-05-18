@@ -35,12 +35,7 @@ def get_movie_data():
 
 
 def restart_ha():
-    import platform
-    os_name = platform.platform()[:7]
-    if os_name.upper() == "WINDOWS":
-        os.system("curl -d \"\" http://" + get_host_ip() + ":8123/api/services/homeassistant/restart")
-    else:
-        os.system("sudo systemctl restart home-assistant@homeassistant.service")
+    os.system("curl -d \"\" http://" + get_host_ip() + ":8123/api/services/homeassistant/restart")
 
 
 def get_host_ip():
