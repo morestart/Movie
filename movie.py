@@ -3,8 +3,8 @@ import logging
 import os
 import socket
 
-import voluptuous as vol
 import requests
+import voluptuous as vol
 
 REQUIREMENTS = ['apscheduler']
 DOMAIN = 'movie'
@@ -35,11 +35,10 @@ def get_movie_data():
 
 
 def restart_ha():
-    os.system("curl -d \"\" http://" + get_host_ip() + ":8123/api/services/homeassistant/restart")
+    os.system("curl -d \"\" http://192.168.0.102:8123/api/services/homeassistant/restart?api_password=971603")
 
 
 def get_host_ip():
-    global s
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.connect(('8.8.8.8', 80))
