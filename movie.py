@@ -35,7 +35,7 @@ def get_movie_data():
 
 
 def restart_ha():
-    os.system("curl -d \"\" http://192.168.0.102:8123/api/services/homeassistant/restart?api_password=HA密码")
+    os.system("curl -d \"\" http://" + get_host_ip() + ":8123/api/services/homeassistant/restart?api_password=HA密码")
 
 
 def get_host_ip():
