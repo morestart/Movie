@@ -49,7 +49,8 @@ async def async_setup(hass, config):
             con = ""
             for name in range(len(movie_name)):
                 con = con + movie[movie_name[name]] + "\n"
-            logging.error("Index" + con)
+            movie.clear()
+            movie_name.clear()
             return con
         except (ConnectError, HTTPError, Timeout, ValueError) as error:
             _LOGGER.error("Unable to connect to DouBan. %s", error)
