@@ -35,8 +35,6 @@ async def async_setup(hass, config):
             con = ""
             for name in range(len(movie_name)):
                 con = con + movie[movie_name[name]] + "\n"
-            # logging.error(con)
-            # logging.error(movie_name)
             movie.clear()
             movie_name.clear()
             return con
