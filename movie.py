@@ -7,7 +7,6 @@ import voluptuous as vol
 
 
 _LOGGER = logging.getLogger(__name__)
-# REQUIREMENTS = ['apscheduler']
 DOMAIN = 'movie'
 
 CONFIG_SCHEMA = vol.Schema({
