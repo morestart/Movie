@@ -68,12 +68,12 @@ async def async_setup(hass, config):
             _LOGGER.error("Unable to connect to DouBan. %s", error)
             return error
 
-    def creat_notification(event_time):
+    def crate_notification(event_time):
         hass.components.persistent_notification.async_create(
             get_movie_data(), "最近上映的电影")
 
     conf = config[DOMAIN]
     event.async_track_time_interval(
-        hass, creat_notification, conf[CONF_INTERVAL_TIME])
+        hass, crate_notification, conf[CONF_INTERVAL_TIME])
 
     return True
