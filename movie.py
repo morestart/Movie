@@ -1,13 +1,25 @@
 import logging
-from datetime import timedelta
+import requests
+import voluptuous as vol
+import homeassistant.helpers.config_validation as cv
+from homeassistant.helpers import event
 from requests.exceptions import (
     ConnectionError as ConnectError, HTTPError, Timeout)
-import requests
-from homeassistant.helpers import event
-
 
 _LOGGER = logging.getLogger(__name__)
 DOMAIN = 'movie'
+CONF_INTERVAL_TIME = "time"
+
+CONFIG_SCHEMA = vol.Schema(
+    {
+        DOMAIN: vol.Schema(
+            {
+                vol.Required(CONF_INTERVAL_TIME):
+                    cv.time_period,
+                vol.Optional(CONF_INTERVAL_TIME, default=86400): cv.time_period,
+            }),
+    },
+    extra=vol.ALLOW_EXTRA)
 
 movie = {}
 movie_name = []
@@ -59,9 +71,9 @@ async def async_setup(hass, config):
     def creat_notification(event_time):
         hass.components.persistent_notification.async_create(
             get_movie_data(), "最近上映的电影")
-    TIME_BETWEEN_UPDATES = timedelta(minutes=1)
 
+    conf = config[DOMAIN]
     event.async_track_time_interval(
-        hass, creat_notification, TIME_BETWEEN_UPDATES)
+        hass, creat_notification, conf[CONF_INTERVAL_TIME])
 
     return True
